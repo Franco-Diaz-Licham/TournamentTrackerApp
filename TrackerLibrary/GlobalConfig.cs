@@ -29,12 +29,12 @@ namespace TrackerLibrary
             // check if databse was the source chosen
             if(db == DatabaseType.Sql)
             {
-                SqlConnector sql = new SqlConnector();
+                SqlConnector sql = new();
                 Connection = sql;
 
             } else if (db == DatabaseType.TextFile)
             {
-                TextConnector Text = new TextConnector();
+                TextConnector Text = new();
                 Connection = Text;
             }
         }

@@ -16,7 +16,7 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// The team member's Email Address to contact
         /// </summary>
-        public string EmaildAddress { get; set; }
+        public string EmailAddress { get; set; }
 
         /// <summary>
         /// the team member's Cellphone Number
@@ -56,7 +56,7 @@ namespace TrackerLibrary.Models
         {
             FirstName = firstName;
             LastName = lastName;
-            EmaildAddress = email;
+            EmailAddress = email;
             CellphoneNumber = phoneNumber;
         }
 

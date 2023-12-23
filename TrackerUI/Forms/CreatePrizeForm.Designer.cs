@@ -44,33 +44,33 @@
             // CreateTeamLabel
             // 
             CreateTeamLabel.AutoSize = true;
-            CreateTeamLabel.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            CreateTeamLabel.Font = new Font("Segoe UI", 20F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
             CreateTeamLabel.ForeColor = SystemColors.MenuHighlight;
-            CreateTeamLabel.Location = new Point(34, 35);
+            CreateTeamLabel.Location = new Point(24, 18);
             CreateTeamLabel.Margin = new Padding(4, 0, 4, 0);
             CreateTeamLabel.Name = "CreateTeamLabel";
             CreateTeamLabel.RightToLeft = RightToLeft.No;
-            CreateTeamLabel.Size = new Size(250, 54);
+            CreateTeamLabel.Size = new Size(176, 37);
             CreateTeamLabel.TabIndex = 13;
-            CreateTeamLabel.Text = "Create Prize";
+            CreateTeamLabel.Text = "PRIZE FORM";
             // 
             // placeNumberLabel
             // 
             placeNumberLabel.AutoSize = true;
             placeNumberLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
             placeNumberLabel.ForeColor = SystemColors.MenuHighlight;
-            placeNumberLabel.Location = new Point(42, 111);
+            placeNumberLabel.Location = new Point(24, 81);
             placeNumberLabel.Name = "placeNumberLabel";
-            placeNumberLabel.Size = new Size(145, 28);
+            placeNumberLabel.Size = new Size(104, 19);
             placeNumberLabel.TabIndex = 15;
             placeNumberLabel.Text = "Place Number";
             // 
             // placeNumberValue
             // 
             placeNumberValue.BorderStyle = BorderStyle.FixedSingle;
-            placeNumberValue.Location = new Point(206, 111);
+            placeNumberValue.Location = new Point(153, 81);
             placeNumberValue.Name = "placeNumberValue";
-            placeNumberValue.Size = new Size(214, 31);
+            placeNumberValue.Size = new Size(177, 23);
             placeNumberValue.TabIndex = 14;
             // 
             // PlaceNameLabel
@@ -78,18 +78,18 @@
             PlaceNameLabel.AutoSize = true;
             PlaceNameLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
             PlaceNameLabel.ForeColor = SystemColors.MenuHighlight;
-            PlaceNameLabel.Location = new Point(42, 177);
+            PlaceNameLabel.Location = new Point(24, 117);
             PlaceNameLabel.Name = "PlaceNameLabel";
-            PlaceNameLabel.Size = new Size(124, 28);
+            PlaceNameLabel.Size = new Size(89, 19);
             PlaceNameLabel.TabIndex = 17;
             PlaceNameLabel.Text = "Place Name";
             // 
             // PlaceNameValue
             // 
             PlaceNameValue.BorderStyle = BorderStyle.FixedSingle;
-            PlaceNameValue.Location = new Point(206, 177);
+            PlaceNameValue.Location = new Point(153, 117);
             PlaceNameValue.Name = "PlaceNameValue";
-            PlaceNameValue.Size = new Size(214, 31);
+            PlaceNameValue.Size = new Size(177, 23);
             PlaceNameValue.TabIndex = 16;
             // 
             // prizeAmountLabel
@@ -97,18 +97,18 @@
             prizeAmountLabel.AutoSize = true;
             prizeAmountLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
             prizeAmountLabel.ForeColor = SystemColors.MenuHighlight;
-            prizeAmountLabel.Location = new Point(42, 249);
+            prizeAmountLabel.Location = new Point(24, 156);
             prizeAmountLabel.Name = "prizeAmountLabel";
-            prizeAmountLabel.Size = new Size(141, 28);
+            prizeAmountLabel.Size = new Size(100, 19);
             prizeAmountLabel.TabIndex = 19;
             prizeAmountLabel.Text = "Prize Amount";
             // 
             // prizeAmountValue
             // 
             prizeAmountValue.BorderStyle = BorderStyle.FixedSingle;
-            prizeAmountValue.Location = new Point(206, 249);
+            prizeAmountValue.Location = new Point(153, 156);
             prizeAmountValue.Name = "prizeAmountValue";
-            prizeAmountValue.Size = new Size(214, 31);
+            prizeAmountValue.Size = new Size(177, 23);
             prizeAmountValue.TabIndex = 18;
             prizeAmountValue.Text = "0";
             // 
@@ -117,18 +117,18 @@
             prizePercentageLabel.AutoSize = true;
             prizePercentageLabel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
             prizePercentageLabel.ForeColor = SystemColors.MenuHighlight;
-            prizePercentageLabel.Location = new Point(30, 442);
+            prizePercentageLabel.Location = new Point(24, 256);
             prizePercentageLabel.Name = "prizePercentageLabel";
-            prizePercentageLabel.Size = new Size(170, 28);
+            prizePercentageLabel.Size = new Size(123, 19);
             prizePercentageLabel.TabIndex = 21;
             prizePercentageLabel.Text = "Prize Percentage";
             // 
             // prizePercentageValue
             // 
             prizePercentageValue.BorderStyle = BorderStyle.FixedSingle;
-            prizePercentageValue.Location = new Point(206, 442);
+            prizePercentageValue.Location = new Point(153, 256);
             prizePercentageValue.Name = "prizePercentageValue";
-            prizePercentageValue.Size = new Size(214, 31);
+            prizePercentageValue.Size = new Size(177, 23);
             prizePercentageValue.TabIndex = 20;
             prizePercentageValue.Text = "0";
             // 
@@ -137,9 +137,9 @@
             orLabel.AutoSize = true;
             orLabel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
             orLabel.ForeColor = SystemColors.MenuHighlight;
-            orLabel.Location = new Point(187, 336);
+            orLabel.Location = new Point(143, 202);
             orLabel.Name = "orLabel";
-            orLabel.Size = new Size(97, 45);
+            orLabel.Size = new Size(65, 30);
             orLabel.TabIndex = 22;
             orLabel.Text = "- or -";
             // 
@@ -148,9 +148,9 @@
             createPrizeButton.BackColor = Color.Silver;
             createPrizeButton.FlatStyle = FlatStyle.Flat;
             createPrizeButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            createPrizeButton.Location = new Point(104, 522);
+            createPrizeButton.Location = new Point(207, 21);
             createPrizeButton.Name = "createPrizeButton";
-            createPrizeButton.Size = new Size(254, 76);
+            createPrizeButton.Size = new Size(123, 36);
             createPrizeButton.TabIndex = 24;
             createPrizeButton.Text = "Create Prize";
             createPrizeButton.UseVisualStyleBackColor = false;
@@ -158,10 +158,10 @@
             // 
             // CreatePrizeForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(475, 631);
+            ClientSize = new Size(358, 300);
             Controls.Add(createPrizeButton);
             Controls.Add(orLabel);
             Controls.Add(prizePercentageLabel);
