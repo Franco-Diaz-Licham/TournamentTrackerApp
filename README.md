@@ -1,4 +1,4 @@
-Tournament Tracker is a Winforms desktop application that allows users to create and play through elimination-style tournaments (e.g. an indoor soccer tournament). 
+Tournament Tracker is a Windows forms desktop application that allows users to create and play through elimination-style tournaments (e.g. an indoor soccer tournament). 
 It allows users to create team members, form teams and specify prizes. The application proceeds to randomize the rounds and matchups to create a tournament.
 
 The application will allow the user to save data to both MSSQL and CSV. Data access for MSSQL uses Dapper via stored procedures for greater control of data querying
