@@ -26,4 +26,4 @@ The application consists of 5 different forms:
 
 ![TeamForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/c8346988-1c9c-4d7e-a728-9aa9f3a6b0b7)
 
-This was completed as a practice project following along Tim Corey's course on C# Windows Forms application development.
+This was completed as a practice project based on Tim Corey's course on C# Application Development.
