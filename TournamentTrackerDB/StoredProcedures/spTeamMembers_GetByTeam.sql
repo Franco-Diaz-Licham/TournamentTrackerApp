@@ -1,0 +1,18 @@
+﻿CREATE PROCEDURE [TOURNAMENT_TRACKER].[spTeamMembers_GetByTeam]
+	@TeamId int
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT 
+		p.*
+	FROM 
+		TOURNAMENT_TRACKER.TeamMembers AS tm
+		INNER JOIN TOURNAMENT_TRACKER.People AS p 
+			ON tm.PersonId = p.Id
+	WHERE 
+		tm.Id = @TeamId
+END
+GO
+
+

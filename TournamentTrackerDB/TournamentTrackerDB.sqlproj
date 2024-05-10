@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>TournamentTrackerDB</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{aa15d7c3-35dc-4038-a5f5-e7866d58f6fe}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>TournamentTrackerDB</RootNamespace>
+    <AssemblyName>TournamentTrackerDB</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultSchema>TOURNAMENT_TRACKER</DefaultSchema>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="StoredProcedures" />
+    <Folder Include="Schemas" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Tables\MatchupEntries.sql" />
+    <Build Include="Schemas\TOURNAMENT_TRACKER.sql" />
+    <Build Include="Tables\Matchups.sql" />
+    <Build Include="Tables\People.sql" />
+    <Build Include="Tables\Prizes.sql" />
+    <Build Include="Tables\TeamMembers.sql" />
+    <Build Include="Tables\Teams.sql" />
+    <Build Include="Tables\TournamentEntries.sql" />
+    <Build Include="Tables\TournamentPrizes.sql" />
+    <Build Include="Tables\Tournaments.sql" />
+    <Build Include="StoredProcedures\spMatchup_GetByTournament.sql" />
+    <Build Include="StoredProcedures\spMatchup_Update.sql" />
+    <Build Include="StoredProcedures\spMatchupEntries.sql" />
+    <Build Include="StoredProcedures\spMatchupEntries_GetByTournament.sql" />
+    <Build Include="StoredProcedures\spMatchupEntry_Update.sql" />
+    <Build Include="StoredProcedures\spMatchups_Insert.sql" />
+    <Build Include="StoredProcedures\spPeople_GetAll.sql" />
+    <Build Include="StoredProcedures\spPeople_GetByLastName.sql" />
+    <Build Include="StoredProcedures\spPerson_Insert.sql" />
+    <Build Include="StoredProcedures\spPrize_GetAll.sql" />
+    <Build Include="StoredProcedures\spPrizes_GetByTournament.sql" />
+    <Build Include="StoredProcedures\spPrizes_Insert.sql" />
+    <Build Include="StoredProcedures\spTeam_GetAll.sql" />
+    <Build Include="StoredProcedures\spTeam_Insert.sql" />
+    <Build Include="StoredProcedures\spTeamMembers_GetByTeam.sql" />
+    <Build Include="StoredProcedures\spTeamMembers_Insert.sql" />
+    <Build Include="StoredProcedures\spTeams_GetByTournament.sql" />
+    <Build Include="StoredProcedures\spTournament_GetAll.sql" />
+    <Build Include="StoredProcedures\spTournament_Insert.sql" />
+    <Build Include="StoredProcedures\spTournament_Update.sql" />
+    <Build Include="StoredProcedures\spTournamentEntries_Insert.sql" />
+    <Build Include="StoredProcedures\spTournamentPrizes_Insert.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TournamentTrackerDB.publish.xml" />
+  </ItemGroup>
+</Project>

@@ -72,36 +72,40 @@ public static class TournamentLogic
 
     private static void AlertPersonToNewRound(PersonModel p, string teamName, MatchupEntryModel? Competitor)
     {
-        if (p.EmailAddress?.Length == 0)
+        if (p.EmailAddress?.Length > 0)
         {
-            return;
+            string to = p.EmailAddress;
+            string subject = $"";
+            StringBuilder body = new();
+
+            if (Competitor != null)
+            {
+                subject = $"You have a new matchup with {Competitor.TeamCompeting.TeamName}";
+
+                body.AppendLine("<h1>You have a new matchup</h1>");
+                body.Append("<strong>Competitor: </strong>");
+                body.Append(Competitor.TeamCompeting.TeamName);
+                body.AppendLine();
+                body.AppendLine();
+                body.AppendLine("Have a great time!");
+                body.AppendLine("~Tournament Tracker~");
+            }
+            else
+            {
+                subject = "You have a bye week";
+                body.AppendLine("Enjoy your week off");
+                body.AppendLine("~Tournament Tracker~");
+            }
+
+            // TODO: Fix the sending email
+            //EmailLogic.SendEmail(to, subject, body.ToString());
         }
 
-        string to = p.EmailAddress;
-        string subject = $"";
-        StringBuilder body = new();
-
-        if (Competitor != null)
+        if(p.CellphoneNumber?.Length > 0)
         {
-            subject = $"You have a new matchup with {Competitor.TeamCompeting.TeamName}";
-
-            body.AppendLine("<h1>You have a new matchup</h1>");
-            body.Append("<strong>Competitor: </strong>");
-            body.Append(Competitor.TeamCompeting.TeamName);
-            body.AppendLine();
-            body.AppendLine();
-            body.AppendLine("Have a great time!");
-            body.AppendLine("~Tournament Tracker~");
+            // TODO: set up sms message
+            //SMSLogic.SendSMSMessage(p.CellphoneNumber, $"You have a new matchup with {Competitor.TeamCompeting.TeamName}");
         }
-        else
-        {
-            subject = "You have a bye week";
-            body.AppendLine("Enjoy your week off");
-            body.AppendLine("~Tournament Tracker~");
-        }
-
-        // TODO: Fix the sending email
-        //EmailLogic.SendEmail(to, subject, body.ToString());
     }
 
     private static void AdvanceWinner(List<MatchupModel> models, TournamentModel tournament)

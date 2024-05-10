@@ -1,0 +1,16 @@
+﻿CREATE PROCEDURE [TOURNAMENT_TRACKER].[spTeam_Insert]
+	@TeamName nvarchar(100),
+	@Id int output
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	INSERT INTO TOURNAMENT_TRACKER.Teams(
+		TeamName)
+	VALUES (
+		@TeamName)
+
+	SELECT
+		@Id = SCOPE_IDENTITY()
+END
+GO
