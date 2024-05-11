@@ -8,11 +8,11 @@ The application consists of 5 different forms:
 
 1. Tournament Dashboard Form: Will allow you to see all active tournaments that are currently taking place.
 
-![TournamentDashboardForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/97ba1602-49a9-45a4-9cbc-5f5193486dd0)
+![TournamentDashboardForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/82a2b42e-ea7d-4586-95cc-8974e467e060)
 
 2. Scoring Form: Will allow you to see all the current matchups and their respective scores.
 
-![ScoreForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/c4af88dc-247d-41b3-ac43-6da0d6598c75)
+![ScoreForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/d70ce3c0-883f-4fea-872d-1d6f1c70b200)
 
 3. Tournament Form: Will allow you to create tournaments by creating prizes, teams, etc...
 
