@@ -1,8 +1,7 @@
 ﻿
-namespace TrackerUI.Interfaces
+namespace TrackerUI.Interfaces;
+
+public interface IPrizeRequester
 {
-    public interface IPrizeRequester
-    {
-        void PrizeComplete(PrizeModel model);
-    }
+    void PrizeComplete(PrizeModel model);
 }

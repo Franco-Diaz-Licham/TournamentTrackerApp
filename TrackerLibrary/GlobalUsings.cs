@@ -10,3 +10,6 @@ global using System.Net.Mail;
 global using Twilio;
 global using Twilio.Rest.Api.V2010.Account;
 global using Twilio.Types;
+global using TrackerLibrary.AppLogic;
+global using System.Data.SqlClient;
+

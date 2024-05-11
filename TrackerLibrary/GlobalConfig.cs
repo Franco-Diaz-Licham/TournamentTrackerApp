@@ -1,8 +1,5 @@
 ﻿namespace TrackerLibrary;
 
-/// <summary>
-/// its job is to write information to whataver data source you have chosen
-/// </summary>
 public static class GlobalConfig
 {
     public const string PrizesFile = "PrizeModel.csv";
@@ -11,47 +8,35 @@ public static class GlobalConfig
     public const string TournamentFile = "TournamentModels.csv";
     public const string MatchupFile = "MatchupModels.csv";
     public const string MatchupEntryFile = "MatchupEntryModels.csv";
-
-    /// <summary>
-    /// creating a public static list of connections so that every part of the code can access it.
-    /// This list will hold anything that implements the contract specifications
-    /// </summary>
     public static IDataConnection Connection {get; private set;}
 
-    /// <summary>
-    /// intialise the connection
-    /// </summary>
-    /// <param name="database"> pass whether you want to connect to SQL server</param>
-    /// <param name="texfiles"> pass whether you want to write to textFiles</param>
-    public static void InitializeConnection(DatabaseType db)
+    public static void InitializeConnection(
+            DatabaseTypeEnum db)
     {
-        // check if databse was the source chosen
-        if(db == DatabaseType.Sql)
+        if(db is DatabaseTypeEnum.Sql)
         {
-            SqlConnector sql = new();
+            var cnx = CnnString("Tournaments");
+            SqlConnector sql = new(cnx);
             Connection = sql;
-
-        } else if (db == DatabaseType.TextFile)
+        } 
+        else if (db is DatabaseTypeEnum.TextFile)
         {
             TextConnector Text = new();
             Connection = Text;
         }
     }
 
-    /// <summary>
-    /// method to retrive the string found under app.config which will contain the information needed
-    /// to connect to the SQL server and run the stored procedure.
-    /// name is the tag in the XML app.config file.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static string CnnString(string name)
+    public static string CnnString(
+            string name)
     {
-        return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+        var cnx = ConfigurationManager.ConnectionStrings[name].ConnectionString;
+        return cnx;
     }
 
-    public static string AppKeyLookup(string key)
+    public static string AppKeyLookup(
+            string key)
     {
-        return ConfigurationManager.AppSettings.GetValues(key).ToString();
+        var value = ConfigurationManager.AppSettings.GetValues(key)!;
+        return value.ToString()!;
     }
 }

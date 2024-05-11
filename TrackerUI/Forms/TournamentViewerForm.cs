@@ -2,65 +2,56 @@ namespace TrackerUI;
 
 public partial class TournamentViewerForm : Form
 {
-    private TournamentModel _tournament { get; set; }
-    private List<int> _rounds { get; set; } = new();
-    private List<MatchupModel> _selectedMatchups { get; set; } = new();
+    private TournamentModel Tournament { get; set; }
+    private List<int> Rounds { get; set; } = new();
+    private List<MatchupModel> SelectedMatchups { get; set; } = new();
 
-    public TournamentViewerForm(TournamentModel tournamentModel)
+    public TournamentViewerForm(
+            TournamentModel tournamentModel)
     {
         InitializeComponent();
-        _tournament = tournamentModel;
-        _tournament.OnTournamentComplete += Tournament_OnTournamentComplete;
+        Tournament = tournamentModel;
+        Tournament.OnTournamentComplete += Tournament_OnTournamentComplete;
         LoadFormData();
         LoadRounds();
     }
 
-    private void Tournament_OnTournamentComplete(object sender, DateTime e)
+    private void Tournament_OnTournamentComplete(
+            object sender, 
+            DateTime e)
     {
         this.Close();
     }
 
-    /// <summary>
-    /// Method which calls other methods to hydrate form.
-    /// </summary>
     public void LoadFormData()
     {
-        tournamentName.Text = _tournament.TournamentName;
+        tournamentName.Text = Tournament.TournamentName;
     }
 
-    /// <summary>
-    /// Method which sets the value of the round dropdownlist.
-    /// </summary>
     private void WireUpRoundLists()
     {
         roundsDropDown.DataSource = null;
-        roundsDropDown.DataSource = _rounds;
+        roundsDropDown.DataSource = Rounds;
     }
 
-    /// <summary>
-    /// Method which sets the values of the matchup lists box.
-    /// </summary>
     private void WireUpMatchupLists()
     {
         matchupListBox.DataSource = null;
-        matchupListBox.DataSource = _selectedMatchups;
+        matchupListBox.DataSource = SelectedMatchups;
         matchupListBox.DisplayMember = "DisplayName";
     }
 
-    /// <summary>
-    /// Method to calculate the total number of rounds in the tournament.
-    /// </summary>
     private void LoadRounds()
     {
-        _rounds = new(){1};
+        Rounds = new(){1};
         int currRound = 1;
 
-        foreach (List<MatchupModel> matchups in _tournament.Rounds)
+        foreach (List<MatchupModel> matchups in Tournament.Rounds)
         {
             if (matchups.First().MatchupRound > currRound)
             {
                 currRound = matchups.First().MatchupRound;
-                _rounds.Add(currRound);
+                Rounds.Add(currRound);
                 currRound += 1;
             }
         }
@@ -70,33 +61,25 @@ public partial class TournamentViewerForm : Form
 
     private void LoadMatchups()
     {
-        if (roundsDropDown.SelectedValue != null)
-        {
-            int round = (int)roundsDropDown.SelectedValue;
-            _selectedMatchups.Clear();
+        if (roundsDropDown.SelectedValue is null)
+            return;
 
-            foreach (List<MatchupModel> matchups in _tournament.Rounds)
-            {
-                if (matchups.First().MatchupRound == round)
-                {
-                    foreach(MatchupModel Matchup in matchups)
-                    {
-                        if(Matchup.Winner == null || !unplayedOnlyCheckBox.Checked)
-                        {
-                            _selectedMatchups.Add(Matchup);
-                        }
-                    }
-                }
-            }
+        int round = (int)roundsDropDown.SelectedValue;
+        SelectedMatchups.Clear();
 
-            WireUpMatchupLists();
-            DisplayMatchupInfo();
-        }
+        foreach (List<MatchupModel> matchups in Tournament.Rounds)
+            if (matchups.First().MatchupRound == round)
+                foreach (MatchupModel Matchup in matchups)
+                    if (Matchup.Winner == null || !unplayedOnlyCheckBox.Checked)
+                        SelectedMatchups.Add(Matchup);
+
+        WireUpMatchupLists();
+        DisplayMatchupInfo();
     }
 
     private void DisplayMatchupInfo()
     {
-        bool isVisible = (_selectedMatchups.Count > 0);
+        bool isVisible = (SelectedMatchups.Count > 0);
 
         teamOneLabel.Visible = isVisible;
         TeamOneScoreLabel.Visible = isVisible;
@@ -145,7 +128,9 @@ public partial class TournamentViewerForm : Form
         }
     }
 
-    private void TournamentViewerForm_Load(object sender, EventArgs e)
+    private void TournamentViewerForm_Load(
+            object sender, 
+            EventArgs e)
     {
 
     }
@@ -153,34 +138,24 @@ public partial class TournamentViewerForm : Form
     private string IsValidData()
     {
         string output = "";
-
-        double teamOneScore = 0;
-        double teamTwoScore = 0;
-
-        bool isScoreOneValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore);
-        bool isScoreTwoValid = double.TryParse(teamTwoScoreValue.Text, out teamTwoScore);
+        bool isScoreOneValid = double.TryParse(teamOneScoreValue.Text, out var teamOneScore);
+        bool isScoreTwoValid = double.TryParse(teamTwoScoreValue.Text, out var teamTwoScore);
 
         if (!isScoreOneValid)
-        {
             output = "Invalid team 1 score.";
-        }
         else if (!isScoreTwoValid)
-        {
             output = "Invalid team 2 score.";
-        }
         else if (teamOneScore == 0 && teamTwoScore == 0)
-        {
             output = "you did not enter a sore for teams 1 and 2.";
-        }
         else if (teamOneScore == teamTwoScore)
-        {
             output = "Ties not allowed in this application.";
-        }
 
         return output;
     }
 
-    private void ScoreButton_Click(object sender, EventArgs e)
+    private void ScoreButton_Click(
+            object sender, 
+            EventArgs e)
     {
         if (IsValidData().Length > 0)
         {
@@ -190,8 +165,6 @@ public partial class TournamentViewerForm : Form
 
         // get values from form
         MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
-        double teamOneScore = 0;
-        double teamTwoScore = 0;
 
         for (int i = 0; i < m.Entries.Count; i++)
         {
@@ -199,18 +172,15 @@ public partial class TournamentViewerForm : Form
             {
                 if (m.Entries[i].TeamCompeting != null)
                 {
-                    bool isValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore);
+                    bool isValid = double.TryParse(teamOneScoreValue.Text, out var teamOneScore);
 
-                    if(isValid)
-                    {
-                        m.Entries[0].Score = teamOneScore;
-                    }
-                    else
+                    if(isValid is false)
                     {
                         MessageBox.Show("Please enter a valid score for team 1.");
                         return;
                     }
 
+                    m.Entries[0].Score = teamOneScore;
                 }
             }
 
@@ -218,25 +188,22 @@ public partial class TournamentViewerForm : Form
             {
                 if (m.Entries[i].TeamCompeting != null)
                 {
-                    bool isValid = double.TryParse(teamTwoScoreValue.Text, out teamTwoScore);
+                    bool isValid = double.TryParse(teamTwoScoreValue.Text, out var teamTwoScore);
 
-                    if (isValid)
-                    {
-                        m.Entries[1].Score = teamTwoScore;
-                    }
-                    else
+                    if (isValid is false)
                     {
                         MessageBox.Show("Please enter a valid score for team 2.");
                         return;
                     }
 
+                    m.Entries[1].Score = teamTwoScore;
                 }
             }
         }
 
         try
         {
-            TournamentLogic.UpdateTournamentResults(_tournament);
+            TournamentLogic.UpdateTournamentResults(Tournament);
         }
         catch (Exception exc)
         {
@@ -247,7 +214,9 @@ public partial class TournamentViewerForm : Form
         LoadMatchups();
     }
 
-    private void MatchupListBox_SelectedIndexChanged(object sender, EventArgs e)
+    private void MatchupListBox_SelectedIndexChanged(
+            object sender, 
+            EventArgs e)
     {
         MatchupModel selectedValue = (MatchupModel)matchupListBox.SelectedItem;
         MatchupModel m;
@@ -256,9 +225,9 @@ public partial class TournamentViewerForm : Form
         {
             m = selectedValue;
         }
-        else if (_selectedMatchups.Count > 0)
+        else if (SelectedMatchups.Count > 0)
         {
-            m = _selectedMatchups.First();
+            m = SelectedMatchups.First();
         }
         else
         {
@@ -269,12 +238,16 @@ public partial class TournamentViewerForm : Form
         LoadMatchup(m);
     }
 
-    private void RoundsDropDown_SelectedIndexChanged(object sender, EventArgs e)
+    private void RoundsDropDown_SelectedIndexChanged(
+            object sender, 
+            EventArgs e)
     {
         LoadMatchups();
     }
 
-    private void UnplayedOnlyCheckBox_CheckedChanged(object sender, EventArgs e)
+    private void UnplayedOnlyCheckBox_CheckedChanged(
+            object sender, 
+            EventArgs e)
     {
         LoadMatchups();
     }

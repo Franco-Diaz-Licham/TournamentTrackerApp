@@ -8,12 +8,12 @@ public class MatchupModel
     /// for a given round and this List of MatchupEntries will contain all those matchups for all the other teams for
     /// a given round
     /// </summary>
-    public List<MatchupEntryModel> Entries { get; set; } = new List<MatchupEntryModel>();
+    public List<MatchupEntryModel> Entries { get; set; } = new();
 
     /// <summary>
     /// which team is the winner out of a specific matchup
     /// </summary>
-    public TeamModel Winner { get; set; }
+    public TeamModel Winner { get; set; } = new();
 
     /// <summary>
     /// ID from the databse that will be used to identify the winner
@@ -25,9 +25,6 @@ public class MatchupModel
     /// </summary>
     public int MatchupRound { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public int Id { get; set; }
 
     public string DisplayName 
@@ -41,13 +38,9 @@ public class MatchupModel
                 if(entry.TeamCompeting != null)
                 {
                     if (name.Length == 0)
-                    {
                         name = entry.TeamCompeting.TeamName;
-                    }
                     else
-                    {
                         name += $" vs. {entry.TeamCompeting.TeamName}";
-                    }
                 }
                 else
                 {

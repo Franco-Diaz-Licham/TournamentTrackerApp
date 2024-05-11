@@ -33,7 +33,8 @@ public class PersonModel
     public int Id { get; set; }
 
     public string FullName 
-    { get
+    { 
+        get
         {
             return $"{FirstName} {LastName}";
         }
@@ -52,7 +53,11 @@ public class PersonModel
     /// <param name="lastName"> last name of person</param>
     /// <param name="email"> email of person</param>
     /// <param name="phoneNumber"> phone number of person</param>
-    public PersonModel(string firstName, string lastName, string email, string phoneNumber)
+    public PersonModel(
+            string firstName, 
+            string lastName, 
+            string email, 
+            string phoneNumber)
     {
         FirstName = firstName;
         LastName = lastName;

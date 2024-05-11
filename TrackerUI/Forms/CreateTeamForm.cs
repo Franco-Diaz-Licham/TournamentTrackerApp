@@ -2,66 +2,75 @@
 
 public partial class CreateTeamForm : Form
 {
-    private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_All();
-    private List<PersonModel> selectedTeamMembers = new();
-    ITeamRequester callingForm;
+    private List<PersonModel> AvailableTeamMembers { get; set; } = GlobalConfig.Connection.GetPerson_All();
+    private List<PersonModel> SelectedTeamMembers { get; set; } = new();
+    private ITeamRequester CallingForm { get; set; }
 
-    public CreateTeamForm(ITeamRequester caller)
+    public CreateTeamForm(
+            ITeamRequester caller)
     {
         InitializeComponent();
-        // CreateSampleData()
-        callingForm = caller;
+        CallingForm = caller;
         WiredUpLists();
     }
 
     private void WiredUpLists()
     {
         selectTeamMemberDropDown.DataSource = null;
-        selectTeamMemberDropDown.DataSource = availableTeamMembers;
+        selectTeamMemberDropDown.DataSource = AvailableTeamMembers;
         selectTeamMemberDropDown.DisplayMember = "FullName";
 
         teamMembersListBox.DataSource = null;
-        teamMembersListBox.DataSource = selectedTeamMembers;
+        teamMembersListBox.DataSource = SelectedTeamMembers;
         teamMembersListBox.DisplayMember = "FullName";
     }
 
-    private void CreateTeamButton_Click(object sender, EventArgs e)
+    private void CreateTeamButton_Click(
+            object sender, 
+            EventArgs e)
     {
-        if (ValidateCreateTeamForm())
+        if (ValidateCreateTeamForm() is false)
+            return;
+
+        TeamModel team = new()
         {
-            TeamModel team = new(){TeamName = teamNameValue.Text, TeamMembers = selectedTeamMembers};
-            GlobalConfig.Connection.CreateTeam(team);
-            callingForm.TeamComplete(team);
-            this.Close();
-        }
+            TeamName = teamNameValue.Text,
+            TeamMembers = SelectedTeamMembers
+        };
+
+        GlobalConfig.Connection.CreateTeam(team);
+        CallingForm.TeamComplete(team);
+
+        this.Close();
     }
 
-    private void CreateMemberButton_Click(object sender, EventArgs e)
+    private void CreateMemberButton_Click(
+            object sender, 
+            EventArgs e)
     {
-        if (ValidateAddPersonForm())
-        {
-            PersonModel p = new PersonModel();
-
-            p.FirstName = firstNameValue.Text;
-            p.LastName = lastNameValue.Text;
-            p.EmailAddress = emailLabel.Text;
-            p.CellphoneNumber = cellPhoneValue.Text;
-
-            GlobalConfig.Connection.CreatePerson(p);
-            selectedTeamMembers.Add(p);
-            WiredUpLists();
-
-            // clear the entries of the form
-            firstNameValue.Text = "";
-            lastNameValue.Text = "";
-            emailValue.Text = "";
-            cellPhoneValue.Text = "";
-        }
-
-        else
+        if (ValidateAddPersonForm() is false)
         {
             MessageBox.Show("This is not a valid Form, please check and try again.");
+            return;
         }
+
+        PersonModel p = new()
+        {
+            FirstName = firstNameValue.Text,
+            LastName = lastNameValue.Text,
+            EmailAddress = emailLabel.Text,
+            CellphoneNumber = cellPhoneValue.Text
+        };
+
+        GlobalConfig.Connection.CreatePerson(p);
+        SelectedTeamMembers.Add(p);
+        WiredUpLists();
+
+        // clear the entries of the form
+        firstNameValue.Text = "";
+        lastNameValue.Text = "";
+        emailValue.Text = "";
+        cellPhoneValue.Text = "";
     }
 
     private bool ValidateAddPersonForm()
@@ -75,22 +84,14 @@ public partial class CreateTeamForm : Form
 
         // check validation conditions
         if (firstName.Length == 0)
-        {
             output = false;
-        }
         if (lastName.Length == 0)
-        {
             output = false;
-        }
-        if (email.Length == 0 &&
-            email.Contains("@"))
-        {
+        if (email.Length == 0 && email.Contains("@"))
             output = false;
-        }
         if (phoneNumber.Length == 0)
-        {
             output = false;
-        }
+
         return output;
     }
 
@@ -100,32 +101,34 @@ public partial class CreateTeamForm : Form
         string teamName = teamNameValue.Text;
 
         if (teamName.Length == 0)
-        {
             output = false;
-        }
+
         return output;
-
     }
 
-    private void AddMemberButton_Click(object sender, EventArgs e)
+    private void AddMemberButton_Click(
+            object sender, 
+            EventArgs e)
     {
-        if (selectTeamMemberDropDown.SelectedItem != null)
-        {
-            PersonModel p = (PersonModel)selectTeamMemberDropDown.SelectedItem;
-            availableTeamMembers.Remove(p);
-            selectedTeamMembers.Add(p);
-            WiredUpLists();
-        }
+        if (selectTeamMemberDropDown.SelectedItem is null)
+            return;
+
+        PersonModel p = (PersonModel)selectTeamMemberDropDown.SelectedItem;
+        AvailableTeamMembers.Remove(p);
+        SelectedTeamMembers.Add(p);
+        WiredUpLists();
     }
 
-    private void RemoveSelectedMemberButton_Click(object sender, EventArgs e)
+    private void RemoveSelectedMemberButton_Click(
+            object sender, 
+            EventArgs e)
     {
-        if (teamMembersListBox.SelectedItem != null)
-        {
-            PersonModel p = (PersonModel)teamMembersListBox.SelectedItem;
-            selectedTeamMembers.Remove(p);
-            availableTeamMembers.Add(p);
-            WiredUpLists();
-        }
+        if (teamMembersListBox.SelectedItem is null)
+            return ;
+
+        PersonModel p = (PersonModel)teamMembersListBox.SelectedItem;
+        SelectedTeamMembers.Remove(p);
+        AvailableTeamMembers.Add(p);
+        WiredUpLists();
     }
 }

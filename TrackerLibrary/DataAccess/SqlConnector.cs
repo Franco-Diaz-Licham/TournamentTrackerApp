@@ -1,13 +1,18 @@
-﻿
-using TrackerLibrary.AppLogic;
-
-namespace TrackerLibrary.DataAccess;
+﻿namespace TrackerLibrary.DataAccess;
 
 public class SqlConnector : IDataConnection
 {
-    public void CreatePrize(PrizeModel model)
+    private string Cnx { get; set; } = string.Empty;
+
+    public SqlConnector(string cnx)
     {
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+        Cnx = cnx;
+    }
+
+    public void CreatePrize(
+            PrizeModel model)
+    {
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             var p = new DynamicParameters();
             p.Add("@PlaceNumber", model.PlaceNumber);
@@ -23,9 +28,10 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    public void CreatePerson(PersonModel model)
+    public void CreatePerson(
+            PersonModel model)
     {
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             var p = new DynamicParameters();
             p.Add("@FirstName", model.FirstName);
@@ -40,14 +46,16 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    public void CreateTeam(TeamModel model)
+    public void CreateTeam(
+            TeamModel model)
     {
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             // create team
             var p = new DynamicParameters();
             p.Add("@TeamName", model.TeamName);
             p.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
             connection.Execute("TOURNAMENT_TRACKER.spTeam_Insert",
                        param: p, commandType: CommandType.StoredProcedure);
 
@@ -65,9 +73,10 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    public void CreateTournament(TournamentModel model)
+    public void CreateTournament(
+            TournamentModel model)
     {
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             SaveTournament(connection, model);
             SaveTournamentPrizes(connection, model);
@@ -78,9 +87,10 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    private void SaveTournamentRounds(IDbConnection connection, TournamentModel model)
+    private void SaveTournamentRounds(
+            IDbConnection connection, 
+            TournamentModel model)
     {
-        // loop through the rounds
         foreach (List<MatchupModel> round in model.Rounds)
         {
             foreach (MatchupModel matchup in round)
@@ -103,21 +113,14 @@ public class SqlConnector : IDataConnection
                     t.Add("@MatchupId", matchup.Id);
 
                     if (entry.TeamCompeting == null)
-                    {
                         t.Add("@TeamCompetingId", null);
-                    }
                     else
-                    {
                         t.Add("@TeamCompetingId", entry.TeamCompeting.Id);
-                    }
                     if (entry.ParentMatchup == null)
-                    {
                         t.Add("@ParentMatchupId", null);
-                    }
                     else
-                    {
                         t.Add("@ParentMatchupId", entry.ParentMatchup.Id);
-                    }
+
                     t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                     connection.Execute("TOURNAMENT_TRACKER.spMatchupEntries",
@@ -129,9 +132,10 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    private void SaveTournamentEntries(IDbConnection connection, TournamentModel model)
+    private void SaveTournamentEntries(
+            IDbConnection connection, 
+            TournamentModel model)
     {
-        // create TournamentEntries
         foreach (TeamModel team in model.EnteredTeams)
         {
             var t = new DynamicParameters();
@@ -144,9 +148,10 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    private void SaveTournamentPrizes(IDbConnection connection, TournamentModel model)
+    private void SaveTournamentPrizes(
+            IDbConnection connection, 
+            TournamentModel model)
     {
-        // create TournamentPrizes
         foreach (PrizeModel pr in model.Prizes)
         {
             var t = new DynamicParameters();
@@ -159,9 +164,10 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    private void SaveTournament(IDbConnection connection, TournamentModel model)
+    private void SaveTournament(
+            IDbConnection connection, 
+            TournamentModel model)
     {
-        // create Tournament
         var t = new DynamicParameters();
         t.Add("@TournamentName", model.TournamentName);
         t.Add("@EntryFee", model.EntryFee);
@@ -176,17 +182,20 @@ public class SqlConnector : IDataConnection
     public List<PersonModel> GetPerson_All()
     {
         List<PersonModel> output;
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             output = connection.Query<PersonModel>("TOURNAMENT_TRACKER.spPeople_GetAll").ToList();
         }
+
         return output;
     }
 
     public List<TeamModel> GetTeam_All()
     {
         List<TeamModel> output;
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             output = connection.Query<TeamModel>("TOURNAMENT_TRACKER.spTeam_GetAll").ToList();
 
@@ -204,7 +213,7 @@ public class SqlConnector : IDataConnection
     public List<TournamentModel> GetTournament_All()
     {
         List<TournamentModel> output;
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             output = connection.Query<TournamentModel>("TOURNAMENT_TRACKER.spTournament_GetAll").ToList();
 
@@ -248,20 +257,14 @@ public class SqlConnector : IDataConnection
                     foreach (MatchupEntryModel me in matchup.Entries)
                     {
                         if (me.TeamCompetingId > 0)
-                        {
                             me.TeamCompeting = allTeams.Where(x => x.Id == me.TeamCompetingId).First();
-                        }
 
                         if (me.ParentMatchupId > 0)
-                        {
                             me.ParentMatchup = matchups.Where(x => x.Id == me.ParentMatchupId).First();
-                        }
                     }
 
                     if (matchup.WinnerId > 0)
-                    {
                         matchup.Winner = allTeams.Where(x => x.Id == matchup.WinnerId).First();
-                    }
 
                 }
 
@@ -289,9 +292,10 @@ public class SqlConnector : IDataConnection
         throw new NotImplementedException();
     }
 
-    public void UpdateMatchup(MatchupModel Matchup)
+    public void UpdateMatchup(
+            MatchupModel Matchup)
     {
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
 
             if (Matchup.Winner != null)
@@ -319,9 +323,10 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    public void CompleteTournament(TournamentModel model)
+    public void CompleteTournament(
+            TournamentModel model)
     {
-        using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString("Tournaments")))
+        using (IDbConnection connection = new SqlConnection(Cnx))
         {
             var t = new DynamicParameters();
             t.Add("@Id", model.Id);

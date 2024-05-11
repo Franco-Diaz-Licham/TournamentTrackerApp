@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [TOURNAMENT_TRACKER].[People](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[FirstName] [nvarchar](50) NOT NULL,
-	[LastName] [nvarchar](50) NOT NULL,
+	[FirstName] [nvarchar](60) NOT NULL,
+	[LastName] [nvarchar](60) NOT NULL,
 	[EmailAddress] [nvarchar](100) NOT NULL,
 	[PhoneNumber] [varchar](20) NULL,
 	[CreateDate] [datetime2](7) NOT NULL,

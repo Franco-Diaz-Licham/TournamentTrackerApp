@@ -38,7 +38,7 @@
             // tournamentDashboardLabel
             // 
             tournamentDashboardLabel.AutoSize = true;
-            tournamentDashboardLabel.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            tournamentDashboardLabel.Font = new Font("Segoe UI", 20F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point);
             tournamentDashboardLabel.ForeColor = SystemColors.MenuHighlight;
             tournamentDashboardLabel.Location = new Point(19, 20);
             tournamentDashboardLabel.Name = "tournamentDashboardLabel";
