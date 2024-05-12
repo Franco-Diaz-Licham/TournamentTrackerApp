@@ -1,9 +1,13 @@
+# Description
 Tournament Tracker is a Windows forms desktop application that allows users to create and play through elimination-style tournaments (e.g. an indoor soccer tournament). 
 It allows users to create team members, form teams and specify prizes. The application proceeds to randomize the rounds and matchups to create a tournament.
 
 The application will allow the user to save data either to MSSQL and Text files. Data access for MSSQL uses Dapper via stored procedures for greater control of data querying
 according to application needs. The application also send email notifying teams of their next round as well as SMS via Twilio Api Integration.
 
+This application was completed as a practice project based on Tim Corey's course on C# Application Development.
+
+# Overview
 The application consists of 5 different forms:
 
 1. Tournament Dashboard Form: Will allow you to see all active tournaments that are currently taking place.
@@ -25,5 +29,3 @@ The application consists of 5 different forms:
 5. Team Form: Will allow you to create teams by creating members.
 
 ![TeamForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/c8346988-1c9c-4d7e-a728-9aa9f3a6b0b7)
-
-This was completed as a practice project based on Tim Corey's course on C# Application Development.
