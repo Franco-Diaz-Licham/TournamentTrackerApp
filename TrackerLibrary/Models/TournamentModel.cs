@@ -1,42 +1,31 @@
-﻿
-namespace TrackerLibrary.Models;
+﻿namespace TrackerLibrary.Models;
 
 public class TournamentModel
 {
-    /// <summary>
-    /// Name of the tournament.
-    /// </summary>
+    #region table cols
+    public int Id { get; set; }
+    public bool Active { get; set; }
     public string TournamentName { get; set; }
-
-    /// <summary>
-    /// The cost to enter the model
-    /// </summary>
     public decimal EntryFee { get; set; }
-
-    /// <summary>
-    /// The list of teams that are part of a tournament
-    /// </summary>
     public List<TeamModel> EnteredTeams { get; set; } = new();
-
-    /// <summary>
-    /// The list of all the prizes available for a tournament
-    /// </summary>
     public List<PrizeModel> Prizes { get; set; } = new();
+    #endregion
 
+    #region related
     /// <summary>
     /// The list of all the lists of matchup. That is, the list of all the rounds
     /// witch every round being a list in itself.
     /// </summary>
     public List<List<MatchupModel>> Rounds { get; set; } = new();
-    public int Id { get; set; }
-    public bool Active { get; set; }
+    #endregion
 
-    public TournamentModel(){ }
+    #region constructors
+    public TournamentModel() { }
 
     public TournamentModel(
-            string tournamentName, 
-            string entryFee, 
-            List<TeamModel> teams, 
+            string tournamentName,
+            string entryFee,
+            List<TeamModel> teams,
             List<PrizeModel> prizes)
     {
         TournamentName = tournamentName;
@@ -44,11 +33,14 @@ public class TournamentModel
         EnteredTeams = teams;
         Prizes = prizes;
     }
+    #endregion
 
+    #region events
     public event EventHandler<DateTime> OnTournamentComplete;
 
     public void HandleCompleteTournament()
     {
         OnTournamentComplete.Invoke(this, DateTime.Now);
     }
+    #endregion
 }

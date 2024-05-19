@@ -3,30 +3,26 @@ namespace TrackerLibrary.Models;
 
 public class MatchupModel
 {
+    #region table cols
+    public int Id { get; set; }
+    /// <summary>
+    /// Represents the curren round for the matchups
+    /// </summary>
+    public int MatchupRound { get; set; }
+    public int WinnerId { get; set; }
+    public TeamModel Winner { get; set; }
+    #endregion
+
+    #region related
     /// <summary>
     /// list of all the matchups for all rounds. That is, every MatchupEntry will have team vs team 
     /// for a given round and this List of MatchupEntries will contain all those matchups for all the other teams for
     /// a given round
     /// </summary>
     public List<MatchupEntryModel> Entries { get; set; } = new();
+    #endregion
 
-    /// <summary>
-    /// which team is the winner out of a specific matchup
-    /// </summary>
-    public TeamModel Winner { get; set; } = new();
-
-    /// <summary>
-    /// ID from the databse that will be used to identify the winner
-    /// </summary>
-    public int WinnerId { get; set; }
-
-    /// <summary>
-    /// Represents the rounds for the matchups
-    /// </summary>
-    public int MatchupRound { get; set; }
-
-    public int Id { get; set; }
-
+    #region helpers
     public string DisplayName 
     {
         get
@@ -52,4 +48,5 @@ public class MatchupModel
             return name;
         }
     }
+    #endregion
 }

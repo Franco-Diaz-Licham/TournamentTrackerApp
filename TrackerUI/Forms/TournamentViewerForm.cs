@@ -52,11 +52,11 @@ public partial class TournamentViewerForm : Form
             {
                 currRound = matchups.First().MatchupRound;
                 Rounds.Add(currRound);
-                currRound += 1;
             }
         }
 
         WireUpRoundLists();
+        LoadMatchups();
     }
 
     private void LoadMatchups()

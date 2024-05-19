@@ -58,7 +58,7 @@ public partial class CreateTeamForm : Form
         {
             FirstName = firstNameValue.Text,
             LastName = lastNameValue.Text,
-            EmailAddress = emailLabel.Text,
+            EmailAddress = emailValue.Text,
             CellphoneNumber = cellPhoneValue.Text
         };
 

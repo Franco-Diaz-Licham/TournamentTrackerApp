@@ -9,6 +9,7 @@ public class SqlConnector : IDataConnection
         Cnx = cnx;
     }
 
+    #region prizes
     public void CreatePrize(
             PrizeModel model)
     {
@@ -28,6 +29,29 @@ public class SqlConnector : IDataConnection
         }
     }
 
+    private void SaveTournamentPrizes(
+        IDbConnection connection,
+        TournamentModel model)
+    {
+        foreach (PrizeModel pr in model.Prizes)
+        {
+            var t = new DynamicParameters();
+            t.Add("@TournamentId", model.Id);
+            t.Add("@PrizeId", pr.Id);
+            t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+            connection.Execute("TOURNAMENT_TRACKER.spTournamentPrizes_Insert",
+                       param: t, commandType: CommandType.StoredProcedure);
+        }
+    }
+
+    public List<PrizeModel> GetPrize_All()
+    {
+        throw new NotImplementedException();
+    }
+    #endregion
+
+    #region person
     public void CreatePerson(
             PersonModel model)
     {
@@ -46,6 +70,20 @@ public class SqlConnector : IDataConnection
         }
     }
 
+    public List<PersonModel> GetPerson_All()
+    {
+        List<PersonModel> output;
+
+        using (IDbConnection connection = new SqlConnection(Cnx))
+        {
+            output = connection.Query<PersonModel>("TOURNAMENT_TRACKER.spPeople_GetAll").ToList();
+        }
+
+        return output;
+    }
+    #endregion
+
+    #region team
     public void CreateTeam(
             TeamModel model)
     {
@@ -73,124 +111,6 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    public void CreateTournament(
-            TournamentModel model)
-    {
-        using (IDbConnection connection = new SqlConnection(Cnx))
-        {
-            SaveTournament(connection, model);
-            SaveTournamentPrizes(connection, model);
-            SaveTournamentEntries(connection, model);
-            SaveTournamentRounds(connection, model);
-            // since byes have been determined, update the tournament.
-            TournamentLogic.UpdateTournamentResults(model);
-        }
-    }
-
-    private void SaveTournamentRounds(
-            IDbConnection connection, 
-            TournamentModel model)
-    {
-        foreach (List<MatchupModel> round in model.Rounds)
-        {
-            foreach (MatchupModel matchup in round)
-            {
-                // loop through the matchups and save them
-                var t = new DynamicParameters();
-                t.Add("@TournamentId", model.Id);
-                t.Add("@MatchupRound", matchup.MatchupRound);
-                t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                connection.Execute("TOURNAMENT_TRACKER.spMatchups_Insert",
-                           param: t, commandType: CommandType.StoredProcedure);
-
-                matchup.Id = t.Get<int>("Id");
-
-                // loop through the entries and save them
-                foreach (MatchupEntryModel entry in matchup.Entries)
-                {
-                    t = new DynamicParameters();
-                    t.Add("@MatchupId", matchup.Id);
-
-                    if (entry.TeamCompeting == null)
-                        t.Add("@TeamCompetingId", null);
-                    else
-                        t.Add("@TeamCompetingId", entry.TeamCompeting.Id);
-                    if (entry.ParentMatchup == null)
-                        t.Add("@ParentMatchupId", null);
-                    else
-                        t.Add("@ParentMatchupId", entry.ParentMatchup.Id);
-
-                    t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                    connection.Execute("TOURNAMENT_TRACKER.spMatchupEntries",
-                               param: t, commandType: CommandType.StoredProcedure);
-
-                    entry.Id = t.Get<int>("Id");
-                }
-            }
-        }
-    }
-
-    private void SaveTournamentEntries(
-            IDbConnection connection, 
-            TournamentModel model)
-    {
-        foreach (TeamModel team in model.EnteredTeams)
-        {
-            var t = new DynamicParameters();
-            t.Add("@TournamentId", model.Id);
-            t.Add("@TeamId", team.Id);
-            t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-            connection.Execute("TOURNAMENT_TRACKER.spTournamentEntries_Insert",
-                       param: t, commandType: CommandType.StoredProcedure);
-        }
-    }
-
-    private void SaveTournamentPrizes(
-            IDbConnection connection, 
-            TournamentModel model)
-    {
-        foreach (PrizeModel pr in model.Prizes)
-        {
-            var t = new DynamicParameters();
-            t.Add("@TournamentId", model.Id);
-            t.Add("@PrizeId", pr.Id);
-            t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-            connection.Execute("TOURNAMENT_TRACKER.spTournamentPrizes_Insert",
-                       param: t, commandType: CommandType.StoredProcedure);
-        }
-    }
-
-    private void SaveTournament(
-            IDbConnection connection, 
-            TournamentModel model)
-    {
-        var t = new DynamicParameters();
-        t.Add("@TournamentName", model.TournamentName);
-        t.Add("@EntryFee", model.EntryFee);
-        t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-        connection.Execute("TOURNAMENT_TRACKER.spTournament_Insert",
-                   param: t, commandType: CommandType.StoredProcedure);
-
-        model.Id = t.Get<int>("Id");
-    }
-
-    public List<PersonModel> GetPerson_All()
-    {
-        List<PersonModel> output;
-
-        using (IDbConnection connection = new SqlConnection(Cnx))
-        {
-            output = connection.Query<PersonModel>("TOURNAMENT_TRACKER.spPeople_GetAll").ToList();
-        }
-
-        return output;
-    }
-
     public List<TeamModel> GetTeam_All()
     {
         List<TeamModel> output;
@@ -208,6 +128,22 @@ public class SqlConnector : IDataConnection
             }
         }
         return output;
+    }
+    #endregion
+
+    #region tournaments
+    public void CreateTournament(
+            TournamentModel model)
+    {
+        using (IDbConnection connection = new SqlConnection(Cnx))
+        {
+            SaveTournament(connection, model);
+            SaveTournamentPrizes(connection, model);
+            SaveTournamentEntries(connection, model);
+            SaveTournamentRounds(connection, model);
+            // since byes have been determined, update the tournament.
+            TournamentLogic.UpdateTournamentResults(model);
+        }
     }
 
     public List<TournamentModel> GetTournament_All()
@@ -287,11 +223,36 @@ public class SqlConnector : IDataConnection
         return output;
     }
 
-    public List<PrizeModel> GetPrize_All()
+    public void CompleteTournament(
+            TournamentModel model)
     {
-        throw new NotImplementedException();
+        using (IDbConnection connection = new SqlConnection(Cnx))
+        {
+            var t = new DynamicParameters();
+            t.Add("@Id", model.Id);
+            t.Add("@Complete", 0);
+            connection.Execute("TOURNAMENT_TRACKER.spTournament_Update",
+            param: t, commandType: CommandType.StoredProcedure);
+        }
     }
 
+    private void SaveTournament(
+            IDbConnection connection,
+            TournamentModel model)
+    {
+        var t = new DynamicParameters();
+        t.Add("@TournamentName", model.TournamentName);
+        t.Add("@EntryFee", model.EntryFee);
+        t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+        connection.Execute("TOURNAMENT_TRACKER.spTournament_Insert",
+                   param: t, commandType: CommandType.StoredProcedure);
+
+        model.Id = t.Get<int>("Id");
+    }
+    #endregion
+
+    #region 1:N tables
     public void UpdateMatchup(
             MatchupModel Matchup)
     {
@@ -323,16 +284,65 @@ public class SqlConnector : IDataConnection
         }
     }
 
-    public void CompleteTournament(
-            TournamentModel model)
+    private void SaveTournamentRounds(
+        IDbConnection connection,
+        TournamentModel model)
     {
-        using (IDbConnection connection = new SqlConnection(Cnx))
+        foreach (List<MatchupModel> round in model.Rounds)
         {
-            var t = new DynamicParameters();
-            t.Add("@Id", model.Id);
-            t.Add("@Complete", 0);
-            connection.Execute("TOURNAMENT_TRACKER.spTournament_Update",
-            param: t, commandType: CommandType.StoredProcedure);
+            foreach (MatchupModel matchup in round)
+            {
+                // loop through the matchups and save them
+                var t = new DynamicParameters();
+                t.Add("@TournamentId", model.Id);
+                t.Add("@MatchupRound", matchup.MatchupRound);
+                t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("TOURNAMENT_TRACKER.spMatchups_Insert",
+                           param: t, commandType: CommandType.StoredProcedure);
+
+                matchup.Id = t.Get<int>("Id");
+
+                // loop through the entries and save them
+                foreach (MatchupEntryModel entry in matchup.Entries)
+                {
+                    t = new DynamicParameters();
+                    t.Add("@MatchupId", matchup.Id);
+
+                    if (entry.TeamCompeting == null)
+                        t.Add("@TeamCompetingId", null);
+                    else
+                        t.Add("@TeamCompetingId", entry.TeamCompeting.Id);
+                    if (entry.ParentMatchup == null)
+                        t.Add("@ParentMatchupId", null);
+                    else
+                        t.Add("@ParentMatchupId", entry.ParentMatchup.Id);
+
+                    t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                    connection.Execute("TOURNAMENT_TRACKER.spMatchupEntries",
+                               param: t, commandType: CommandType.StoredProcedure);
+
+                    entry.Id = t.Get<int>("Id");
+                }
+            }
         }
     }
+
+    private void SaveTournamentEntries(
+            IDbConnection connection,
+            TournamentModel model)
+    {
+        foreach (TeamModel team in model.EnteredTeams)
+        {
+            var t = new DynamicParameters();
+            t.Add("@TournamentId", model.Id);
+            t.Add("@TeamId", team.Id);
+            t.Add("Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+            connection.Execute("TOURNAMENT_TRACKER.spTournamentEntries_Insert",
+                       param: t, commandType: CommandType.StoredProcedure);
+        }
+    }
+    #endregion
 }

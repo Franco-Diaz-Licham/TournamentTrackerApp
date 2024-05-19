@@ -11,11 +11,12 @@ public static class GlobalConfig
     public static IDataConnection Connection {get; private set;}
 
     public static void InitializeConnection(
-            DatabaseTypeEnum db)
+            DatabaseTypeEnum db,
+            string? cnx)
     {
-        if(db is DatabaseTypeEnum.Sql)
+        if(db is DatabaseTypeEnum.Sql && 
+           cnx is not null)
         {
-            var cnx = CnnString("Tournaments");
             SqlConnector sql = new(cnx);
             Connection = sql;
         } 

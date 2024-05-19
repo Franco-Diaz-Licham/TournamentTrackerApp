@@ -7,7 +7,10 @@ public class TextConnector : IDataConnection
     {
         // 1. Load the text file unto program
         // 2. Convert the text to List<PrizeModel> i.e. a list of models
-        List<PrizeModel> prizes = GlobalConfig.PrizesFile.FullFilePath().LoadFile().ConvertToPrizeModels();
+        List<PrizeModel> prizes = GlobalConfig.PrizesFile
+                                              .FullFilePath()
+                                              .LoadFile()
+                                              .ConvertToPrizeModels();
 
         // 3. Find the max ID
         // N.B. OrderByDesceding takes in a List of objects
@@ -30,7 +33,10 @@ public class TextConnector : IDataConnection
     public void CreatePerson(
             PersonModel model)
     {
-        List<PersonModel> persons = GlobalConfig.PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+        List<PersonModel> persons = GlobalConfig.PeopleFile
+                                                .FullFilePath()
+                                                .LoadFile()
+                                                .ConvertToPersonModels();
         int currentId = 1;
         if(persons.Count > 0)
             currentId = persons.OrderByDescending(x => x.Id).First().Id + 1;
@@ -43,7 +49,10 @@ public class TextConnector : IDataConnection
     public void CreateTeam(
             TeamModel model)
     {
-        List<TeamModel> teams = GlobalConfig.TeamFile.FullFilePath().LoadFile().ConvertToTeamModels();
+        List<TeamModel> teams = GlobalConfig.TeamFile
+                                            .FullFilePath()
+                                            .LoadFile()
+                                            .ConvertToTeamModels();
         int currentId = 1;
         if (teams.Count > 0)
             currentId = teams.OrderByDescending(x => x.Id).First().Id + 1;
@@ -56,7 +65,10 @@ public class TextConnector : IDataConnection
     public void CreateTournament(
             TournamentModel model)
     {
-        List<TournamentModel> tournaments = GlobalConfig.TournamentFile.FullFilePath().LoadFile().ConvertToTournamentModels();
+        List<TournamentModel> tournaments = GlobalConfig.TournamentFile
+                                                        .FullFilePath()
+                                                        .LoadFile()
+                                                        .ConvertToTournamentModels();
 
         int currentId = 1;
 
@@ -103,9 +115,9 @@ public class TextConnector : IDataConnection
             TournamentModel model)
     {
         List<TournamentModel> tournaments = GlobalConfig.TournamentFile
-                                            .FullFilePath()
-                                            .LoadFile()
-                                            .ConvertToTournamentModels();
+                                                        .FullFilePath()
+                                                        .LoadFile()
+                                                        .ConvertToTournamentModels();
 
         tournaments.Remove(model);
         tournaments.SaveToTournamentFile();

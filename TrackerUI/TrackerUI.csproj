@@ -6,10 +6,21 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>TournamentTracker.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TournamentTracker.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TrackerLibrary\TrackerLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TournamentTracker.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

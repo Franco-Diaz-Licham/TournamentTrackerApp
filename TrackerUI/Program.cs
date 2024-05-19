@@ -6,7 +6,8 @@ internal static class Program
     static void Main()
     {
         ApplicationConfiguration.Initialize();
-        GlobalConfig.InitializeConnection(DatabaseTypeEnum.Sql);
+        var cnx = GlobalConfig.CnnString("Tournaments");
+        GlobalConfig.InitializeConnection(DatabaseTypeEnum.Sql, cnx);
         Application.Run(new TournamentDashboardForm());
     }
 }
