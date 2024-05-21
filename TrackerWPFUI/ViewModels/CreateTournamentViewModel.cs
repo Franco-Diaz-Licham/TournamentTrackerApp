@@ -36,7 +36,8 @@ public class CreateTournamentViewModel : Conductor<object>.Collection.AllActive,
 		{ 
 			_tournamentName = value; 
 			NotifyOfPropertyChange(() => TournamentName);
-		}
+            NotifyOfPropertyChange(() => CanCreateTournament);
+        }
 	}
 
     public decimal EntryFee
@@ -49,7 +50,8 @@ public class CreateTournamentViewModel : Conductor<object>.Collection.AllActive,
 		{ 
 			_entryFee = value;
 			NotifyOfPropertyChange(() => EntryFee);
-		}
+            NotifyOfPropertyChange(() => CanCreateTournament);
+        }
 	}
 
     public TeamModel SelectedTeamToAdd

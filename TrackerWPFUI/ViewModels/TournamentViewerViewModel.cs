@@ -25,7 +25,7 @@ public class TournamentViewerViewModel : Screen
     public string TournamentName{
         get
         {
-            return $"Tournament: {Tournament.TournamentName}";
+            return Tournament.TournamentName;
         }
         set
         {

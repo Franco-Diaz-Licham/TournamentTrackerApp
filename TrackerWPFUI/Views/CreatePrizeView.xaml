@@ -4,13 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TrackerWPFUI.Views"
-             mc:Ignorable="d"
-             d:DesignHeight="250" d:DesignWidth="300">
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="400">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock FontSize="24"
-                       Margin="5 0 10 10"
-                       FontWeight="DemiBold">Create Prize</TextBlock>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -25,41 +22,45 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <TextBlock Grid.Column="0"
                            Grid.Row="0"
-                           Margin="5 0 10 10">Place Number</TextBlock>
+                           Margin="0 0 0 10">Place Number:</TextBlock>
                 <TextBox x:Name="PlaceNumber" 
                          Grid.Row="0" 
                          Grid.Column="1"
-                         Margin="0 0 5 10"/>
+                         Margin="0 0 0 10"
+                         Background="#C8C8C8"/>
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
-                           Margin="5 0 10 10">Place Name</TextBlock>
+                           Margin="0 0 0 10">Place Name:</TextBlock>
                 <TextBox x:Name="PlaceName" 
                          Grid.Row="1" 
                          Grid.Column="1"
-                         Margin="0 0 5 10"/>
+                         Margin="0 0 0 10"
+                         Background="#C8C8C8"/>
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
-                           Margin="5 0 10 10">Prize Amount</TextBlock>
+                           Margin="0 0 0 10">Prize Amount:</TextBlock>
                 <TextBox x:Name="PrizeAmount" 
                          Grid.Row="2" 
                          Grid.Column="1"
-                         Margin="0 0 5 10"/>
+                         Margin="0 0 0 10"
+                         Background="#C8C8C8"/>
                 <TextBlock Grid.Row="3"
                            Grid.Column="0"
-                           Margin="5 0 5 10"
+                           Margin="0 0 0 10"
                            Grid.ColumnSpan="2"
                            HorizontalAlignment="Center"
-                           FontWeight="Bold"> - OR - </TextBlock>
+                           FontWeight="Bold">- OR -</TextBlock>
                 <TextBlock Grid.Row="4"
                            Grid.Column="0"
-                           Margin="5 0 10 10">Prize Percentage</TextBlock>
+                           Margin="0 0 5 10">Prize Percentage:</TextBlock>
                 <TextBox x:Name="PrizePercentage" 
                          Grid.Row="4" 
                          Grid.Column="1"
-                         Margin="0 0 5 10"/>
+                         Margin="0 0 0 10"
+                         Background="#C8C8C8"/>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             Grid.Row="5"
@@ -67,12 +68,19 @@
                             Grid.ColumnSpan="2">
                     <Button x:Name="CreatePrize" 
                             Padding="5"
-                            Margin="5">Create</Button>
+                            Margin="5" 
+                            Content="Create Prize"
+                            Background="Gray"
+                            FontWeight="DemiBold"
+                            FontSize="15"/>
                     <Button x:Name="CancelCreation" 
                             Padding="5"
                             Margin="5"
                             Background="Red"
-                            Foreground="white">Cancel</Button>
+                            Foreground="white" 
+                            Content="Cancel"
+                            FontWeight="DemiBold"
+                            FontSize="15"/>
                 </StackPanel>
             </Grid>
         </StackPanel>

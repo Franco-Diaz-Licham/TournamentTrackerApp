@@ -5,12 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TrackerWPFUI.Views"
              mc:Ignorable="d"
-             d:DesignHeight="200" d:DesignWidth="300">
+             d:DesignHeight="200" d:DesignWidth="400">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <TextBlock FontSize="24"
-                       Margin="5 0 10 10"
-                       FontWeight="DemiBold">Create Person</TextBlock>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -27,46 +24,56 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
                            Grid.Row="0"
-                           Margin="5 0 10 10">First Name</TextBlock>
+                           Margin="0 0 10 10">First Name:</TextBlock>
                 <TextBox x:Name="FirstName" 
                          Grid.Row="0" 
                          Grid.Column="1"
-                         Margin="0 0 5 10"/>
+                         Margin="0 0 5 10"
+                         Background="#C8C8C8"/>
                 <TextBlock Grid.Row="1"
                            Grid.Column="0"
-                           Margin="5 0 10 10">Last Name</TextBlock>
+                           Margin="0 0 10 10">Last Name:</TextBlock>
                 <TextBox x:Name="LastName" 
                          Grid.Row="1" 
                          Grid.Column="1"
-                         Margin="0 0 5 10"/>
+                         Margin="0 0 5 10"
+                         Background="#C8C8C8"/>
                 <TextBlock Grid.Row="2"
                            Grid.Column="0"
-                           Margin="5 0 10 10">Email Address</TextBlock>
+                           Margin="0 0 10 10">Email:</TextBlock>
                 <TextBox x:Name="EmailAddress" 
-                         Grid.Row="3" 
-                         Grid.Column="1"
-                         Margin="0 0 5 10"/>
-                <TextBlock Grid.Row="3"
-                           Grid.Column="0"
-                           Margin="5 0 10 10">Cellphone</TextBlock>
-                <TextBox x:Name="Cellphone" 
                          Grid.Row="2" 
                          Grid.Column="1"
-                         Margin="0 0 5 10"/>
+                         Margin="0 0 5 10"
+                         Background="#C8C8C8"/>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           Margin="0 0 10 10">Phone:</TextBlock>
+                <TextBox x:Name="Cellphone" 
+                         Grid.Row="3" 
+                         Grid.Column="1"
+                         Margin="0 0 5 10"
+                         Background="#C8C8C8"/>
                 <StackPanel Grid.Row="5"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
                             Orientation="Horizontal"
                             VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
+                            HorizontalAlignment="Center"
+                            Margin="0 10 0 0">
                     <Button x:Name="CreatePerson" 
                             Padding="5"
-                            Margin="10 0 10 5" >Create</Button>
+                            Margin="10 0 10 5" 
+                            FontSize="15"
+                            Background="Gray"
+                            FontWeight="DemiBold">Create Member</Button>
                     <Button x:Name="CancelCreation" 
                             Padding="5"
                             Margin="10 0 10 5"
                             Background="Red"
-                            Foreground="white">Cancel</Button>
+                            Foreground="white"
+                            FontSize="15"
+                            FontWeight="DemiBold">Cancel</Button>
                 </StackPanel>
             </Grid>
         </StackPanel>
