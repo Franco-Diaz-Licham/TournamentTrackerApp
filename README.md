@@ -7,13 +7,13 @@ according to application needs. The application also send email notifying teams 
 
 This application was completed as a practice project based on Tim Corey's course on C# Application Development.
 
-# WPF
+# WPF UI
 The WPF user interface was created using the MVVM design pattern. It consists of one parent view, with two main child views for creating a new tournament
 and scoring teams as they compete. The New tournament view further consists of children views including creating prize, creating teams, team members, etc...
 
 ![Recording](https://github.com/Franco-Diaz-Licham/TournamentTrackerApp/assets/138960498/27d1299b-1a10-423d-9aed-726f6c206c79)
 
-# WinForms
+# WinForms UI
 The WinForms application consists of 5 main forms including:
 
 1. Tournament Dashboard Form: Will allow you to see all active tournaments that are currently taking place.
