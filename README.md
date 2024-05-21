@@ -14,7 +14,8 @@ and scoring teams as they compete. The New tournament view further consists of c
 ![Recording](https://github.com/Franco-Diaz-Licham/TournamentTrackerApp/assets/138960498/27d1299b-1a10-423d-9aed-726f6c206c79)
 
 # WinForms
-The WPF user interface was created using the MVVM design pattern.
+The WinForms application consists of 5 main forms including:
+
 1. Tournament Dashboard Form: Will allow you to see all active tournaments that are currently taking place.
 
 ![TournamentDashboardForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/82a2b42e-ea7d-4586-95cc-8974e467e060)
