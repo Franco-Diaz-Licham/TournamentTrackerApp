@@ -1,5 +1,5 @@
 # Description
-Tournament Tracker is a Windows forms desktop application that allows users to create and play through elimination-style tournaments (e.g. an indoor soccer tournament). 
+Tournament Tracker is a WPF and WinForms application that allows users to create and play through elimination-style tournaments (e.g. an indoor soccer tournament). 
 It allows users to create team members, form teams and specify prizes. The application proceeds to randomize the rounds and matchups to create a tournament.
 
 The application will allow the user to save data either to MSSQL and Text files. Data access for MSSQL uses Dapper via stored procedures for greater control of data querying
@@ -7,9 +7,14 @@ according to application needs. The application also send email notifying teams 
 
 This application was completed as a practice project based on Tim Corey's course on C# Application Development.
 
-# Overview
-The application consists of 5 different forms:
+# WPF
+The WPF user interface was created using the MVVM design pattern. It consists of one parent view, with two main child views for creating a new tournament
+and scoring teams as they compete. The New tournament view further consists of children views including creating prize, creating teams, team members, etc...
 
+![Recording](https://github.com/Franco-Diaz-Licham/TournamentTrackerApp/assets/138960498/27d1299b-1a10-423d-9aed-726f6c206c79)
+
+# WinForms
+The WPF user interface was created using the MVVM design pattern.
 1. Tournament Dashboard Form: Will allow you to see all active tournaments that are currently taking place.
 
 ![TournamentDashboardForm](https://github.com/Franco-Diaz-Licham/TournamentTracker/assets/138960498/82a2b42e-ea7d-4586-95cc-8974e467e060)
