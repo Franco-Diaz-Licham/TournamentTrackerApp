@@ -5,8 +5,6 @@ It allows users to create team members, form teams and specify prizes. The appli
 The application will allow the user to save data either to MSSQL and Text files. Data access for MSSQL uses Dapper via stored procedures for greater control of data querying
 according to application needs. The application also send email notifying teams of their next round as well as SMS via Twilio Api Integration.
 
-This application was completed as a practice project based on Tim Corey's course on C# Application Development.
-
 # WPF UI
 The WPF user interface was created using the MVVM design pattern. It consists of one parent view, with two main child views for creating a new tournament
 and scoring teams as they compete. The New tournament view further consists of children views including creating prize, creating teams, team members, etc...
